@@ -42,14 +42,21 @@ class NeuralNetwork:
     def CreateLayerSoftmax(self, size:int):
         new_lay = self.SoftmaxLay(size)
         self.layers = np.append(self.layers, new_lay)
+    
+    def CrossEntropyLoss(self, predictons):
 
+        predictons = -np.log(predictons)
+        cross_entropy_loss = np.sum(predictons)
+        return cross_entropy_loss
     
     def forward(self, X_train):
         output = self.layers[0].forward(X_train)
         for it in self.layers[1:]:
             output = it.forward(output)
         
-        print(output)
+        ce_loss = self.CrossEntropyLoss(output)
+        print(ce_loss)
+
 
             
 
