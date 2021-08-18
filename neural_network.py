@@ -2,6 +2,10 @@ import numpy as np
 from numpy.core.numeric import outer 
 
 class NeuralNetwork:
+    
+    def __init__(self):
+        self.count_of_lays = 0
+        self.layers = np.array([])   
 
     class ReluLayer:
 
@@ -48,9 +52,6 @@ class NeuralNetwork:
             y[it,:] = new_row/sum
         return y
 
-    def __init__(self):
-        self.count_of_lays = 0
-        self.layers = np.array([])   
     
     def CreateLayerRelu(self, size:tuple):
         new_lay = self.ReluLayer(size)
@@ -72,9 +73,11 @@ class NeuralNetwork:
         # cr_en_loss = 0
         # for it in range(len(true_labels)):
         #     cr_en_loss += -np.log(predictions[it, true_labels[it]])
+        
         self.predictions = predictions
         self.true_labels = true_labels
         arr = predictions[range(len(true_labels)), true_labels.reshape(1,-1)]
+        
         # Значение не должно быть равно 0, для того, чтобы не было ошибки при взятии логарифма, потому передадим близкое к 0 значение
         arr[arr == 0] += 1e-6
         cr_en_loss = np.sum(-np.log(arr))
