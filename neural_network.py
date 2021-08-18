@@ -75,6 +75,8 @@ class NeuralNetwork:
         self.predictions = predictions
         self.true_labels = true_labels
         arr = predictions[range(len(true_labels)), true_labels.reshape(1,-1)]
+        # Значение не должно быть равно 0, для того, чтобы не было ошибки при взятии логарифма, потому передадим близкое к 0 значение
+        arr[arr == 0] += 1e-6
         cr_en_loss = np.sum(-np.log(arr))
 
         return cr_en_loss/len(true_labels)
